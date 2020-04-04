@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool button(const std::string& text, int posX, int posY, int width, int height) {
+bool ui::Button(const std::string& text, int posX, int posY, int width, int height) {
   const int fontSize = 20;
   int margin = 5;
 
@@ -25,8 +25,8 @@ bool button(const std::string& text, int posX, int posY, int width, int height) 
   if (isInside(cursorPos, Rectangle{asFloat(posX), asFloat(posY), asFloat(width), asFloat(height)})) {
     isHover = true;
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-      // TODO: track button id where mouse was pressed and released.
-      // Current behaviour: we can press mouse somewhere and move it to the button and release.
+      // TODO: track Button id where mouse was pressed and released.
+      // Current behaviour: we can press mouse somewhere and move it to the Button and release.
       // This will fire onClick
       isClicked = true;
     }

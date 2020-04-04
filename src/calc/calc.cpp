@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../ui/ui.hpp"
+#include "../ui/absolute_layout.hpp"
 #include "calc_buttons.hpp"
 #include "calc_context.hpp"
 
@@ -59,13 +59,15 @@ void RunCalc() {
   CalcContext ctx;
 
   while (!WindowShouldClose()) {
+    AbsoluteLayout layout;
+
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
 
     stringstream ss;
     ss << ctx.lhs << " " << ctx.rhs;
-    Label(ss.str(), startXAt, labelY, labelWidth, labelHeight);
+    layout.Label(ss.str(), startXAt, labelY, labelWidth, labelHeight);
 
     for (auto i = 0; i < btnTexts.size(); i++) {
       auto t = btnTexts[i];
@@ -76,7 +78,7 @@ void RunCalc() {
       int k = i % btnCol;
       int x = startXAt + k * (btnWidth + margin);
       int y = startYAt + j * (btnHeight + margin);
-      if (button(t, x, y, btnWidth, btnHeight)) {
+      if (layout.Button(t, x, y, btnWidth, btnHeight)) {
         // TODO: some magic!!!!
         btnActions.at(t)->Act(&ctx);
         ctx.PrintState();

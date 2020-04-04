@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void Label(const string& text, int posX, int posY, int width, int height) {
+void ui::Label(const string& text, int posX, int posY, int width, int height) {
   const int fontSize = 20;
   int margin = 5;
   if (width < 0) {
