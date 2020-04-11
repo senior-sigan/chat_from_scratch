@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 
+#include "../ui2/float_layout.hpp"
 #include "../ui2/vertical_layout.hpp"
 #include "../ui2/wigets.hpp"
 #include "chat.hpp"
@@ -18,7 +19,12 @@ static void Update(Chat& chat) {
   }
 
   auto chatBody = ui2::VerticalLayout({300, 0});
-  ui2::Label(&chatBody, chat.selectedUser);
+  if (!chat.selectedUser.empty()) {
+    ui2::Label(&chatBody, chat.selectedUser);
+  }
+
+  auto textInputLayout = ui2::FloatLayout({300, 490});
+  ui2::TextInput(&textInputLayout, chat.textInput, "type a message", 490, 100);
 }
 
 void RunChat() {
