@@ -2,53 +2,23 @@
 
 #include <raylib.h>
 
-#include "../ui/absolute_layout.hpp"
-#include "../ui/vertical_layout.hpp"
+#include "../ui2/vertical_layout.hpp"
+#include "../ui2/wigets.hpp"
 #include "chat.hpp"
 
 using namespace std;
 
 static void Update(Chat& chat) {
-  AbsoluteLayout root;
+  auto chatList = ui2::VerticalLayout({0, 0});
 
-  auto chatList = root.NewVerticalLayout(0, 0, 300);
-
-  for (const auto& user: chat.GetUsers()) {
-    if (chatList.Button(user, 32)) {
+  for (const auto& user : chat.GetUsers()) {
+    if (ui2::Button(&chatList, user)) {
       chat.selectedUser = user;
     }
   }
 
-  auto chatBody = root.NewVerticalLayout(chatList.GetPosX() + chatList.GetWidth(), 0, 500);
-  chatBody.NewLabel(chat.selectedUser, 32);
-  chatBody.NewWidget(600-32-96);
-
-  //  Gui gui;
-  //
-  //  gui.button();
-  //
-  //  auto hz = gui.horizontal();
-  //
-  //  auto chatList = hz.verticalLayou();
-  //
-  //  chatList.button("Ilya", width=100%);
-  //  chatList.button("twitch Chat");
-  //  chatList.button("Sportloto");
-  //
-  //  auto chatBody = hz.verticalLayou();
-  //
-  //
-  //  BeginHorizontalLayout();
-  //
-  //    BeginVerticalLayout();
-  //    // chats list view
-  //    EndVerticalLayout();
-  //
-  //    BeginVerticalLayout();
-  //    // chat body view
-  //    EndVerticalLayout();
-  //
-  //  EndHorizontalLayout();
+  auto chatBody = ui2::VerticalLayout({300, 0});
+  ui2::Label(&chatBody, chat.selectedUser);
 }
 
 void RunChat() {

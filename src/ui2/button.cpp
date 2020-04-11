@@ -1,11 +1,9 @@
 #include <raylib.h>
 
 #include "../utils.hpp"
-#include "ui.hpp"
+#include "wigets.hpp"
 
-using namespace std;
-
-bool ui::Button(const std::string& text, int posX, int posY, int width, int height) {
+bool ui2::Button(ILayout* layout, const std::string& text, int width, int height) {
   const int fontSize = 20;
   int margin = 5;
 
@@ -19,10 +17,12 @@ bool ui::Button(const std::string& text, int posX, int posY, int width, int heig
     height = txtHeight;
   }
 
+  auto pos = layout->AddWidget(width, height);
+
   auto cursorPos = GetMousePosition();
   bool isHover = false;
   bool isClicked = false;
-  if (isInside(cursorPos, Rectangle{asFloat(posX), asFloat(posY), asFloat(width), asFloat(height)})) {
+  if (isInside(cursorPos, Rectangle{asFloat(pos.x), asFloat(pos.y), asFloat(width), asFloat(height)})) {
     isHover = true;
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
       // TODO: track Button id where mouse was pressed and released.
@@ -33,9 +33,9 @@ bool ui::Button(const std::string& text, int posX, int posY, int width, int heig
   }
 
   if (isHover) {
-    DrawRectangle(posX, posY, width, height, BLUE);
+    DrawRectangle(pos.x, pos.y, width, height, BLUE);
   } else {
-    DrawRectangle(posX, posY, width, height, SKYBLUE);
+    DrawRectangle(pos.x, pos.y, width, height, SKYBLUE);
   }
 
   // TODO: pos text in the middle of the rect
@@ -43,7 +43,7 @@ bool ui::Button(const std::string& text, int posX, int posY, int width, int heig
   int txtCenterX = (width - txtWidth) / 2;
   int txtCenterY = (height - txtHeight) / 2;
 
-  DrawText(text.c_str(), posX + margin + txtCenterX, posY + margin + txtCenterY, fontSize, BLACK);
+  DrawText(text.c_str(), pos.x + margin + txtCenterX, pos.y + margin + txtCenterY, fontSize, BLACK);
 
   return isClicked;
 }

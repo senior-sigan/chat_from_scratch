@@ -4,5 +4,4 @@
 int main() {
   //  RunCalc();
   RunChat();
-  return 0;
 }
